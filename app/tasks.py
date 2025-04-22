@@ -46,6 +46,7 @@ def current_time():
     print(f"現在時間：{current_time}")
     return {"current_time": current_time, "timestamp": datetime.datetime.now().timestamp(), "message": "排程回傳時間"}
 
+# 當下時間 log
 @celery_app.task()
 def log_current_now_time():
     log_dir = "logs"
