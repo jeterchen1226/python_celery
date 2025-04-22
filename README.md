@@ -10,7 +10,12 @@ $ brew services start redis
 ```bash
 $ brew services info redis
 ```
+## 安裝必要套件
+```bash
+$ poetry add uvicorn fastapi celery redis
+```
 ## 執行
+###### app、worker are customized, and you can name them according to your own ideas.
 ```bash
 $ uvicorn main:app --reload
 $ celery -A app.worker worker --loglevel=info

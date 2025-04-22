@@ -4,9 +4,9 @@ celery_app = Celery(
     "worker",
     # Redis連接
     broker="redis://localhost:6379/0",
-    # 結果後端
+    # 後端
     backend="redis://localhost:6379/0",
-    # 包含任務模組
+    # 任務模組
     include=["app.tasks"]
 )
 
@@ -33,6 +33,10 @@ celery_app.conf.beat_schedule = {
     },    
     "minute_time_report": {
         "task": "app.tasks.current_time",
+        "schedule": 60.0,  # 每60秒執行一次
+    },
+    "write_log_every_minute": {
+        "task": "app.tasks.log_current_now_time",
         "schedule": 60.0,  # 每60秒執行一次
     },
 }
