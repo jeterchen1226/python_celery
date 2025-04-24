@@ -11,7 +11,7 @@ class TaskRequest(BaseModel):
     param1: str
     param2: int = None
 
-# 創建一個新的 Celery 任務
+# 創建一個新的 Celery 任務，立即回傳 task id，不會等待任務完成
 @app.post("/tasks", status_code=201)
 def create_task(request: TaskRequest):
     task = sample_task.delay(request.param1, request.param2)

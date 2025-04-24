@@ -1,6 +1,14 @@
+# 定義 celery 任務
 from app.worker import celery_app
+from typing import Optional, Dict
 import datetime
 import os
+import time
+
+@celery_app.task()
+def sample_task(param1: str, param2: Optional[int] = None) -> Dict:
+    time.sleep(5)
+    return {"message": f"任務處理完成：{param1}", "params": param2}
 
 @celery_app.task()
 def log_current_now_time():
