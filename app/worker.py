@@ -33,5 +33,7 @@ celery_app.conf.beat_schedule = {
     "run_scraper": {
         "task": "app.run_scraper.scraper",
         "schedule": crontab(hour=9, minute=0)
+        # "schedule": crontab(hour=9, day_of_week="1-5")
+        # "schedule": crontab(hour=9, day_of_month="5,25")
     }
 }
