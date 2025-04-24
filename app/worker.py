@@ -1,5 +1,6 @@
 # celery 初始化和設定
 from celery import Celery
+from celery.schedules import crontab
 
 celery_app = Celery(
     "worker",
@@ -8,7 +9,8 @@ celery_app = Celery(
     # 後端
     backend="redis://localhost:6379/0",
     # 任務模組
-    include=["app.tasks"]
+    # 不同模組的方法需要在這增加模組，並在beat_schedule加入該方法設定內容
+    include=["app.tasks", "app.run_scraper"]
 )
 
 celery_app.conf.update(
@@ -27,4 +29,9 @@ celery_app.conf.beat_schedule = {
         # 執行頻率
         "schedule": 60.0,  # 每60秒執行一次
     },
+    # 假如有個爬蟲每天早上九點需執行
+    "run_scraper": {
+        "task": "app.run_scraper.scraper",
+        "schedule": crontab(hour=9, minute=0)
+    }
 }
